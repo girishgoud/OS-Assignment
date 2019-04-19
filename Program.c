@@ -1,135 +1,127 @@
 #include<stdio.h>
+struct job{
+	int prid;
+	int art;
+	int but;
+	int tat;
+	int wat;
+	int rbt;
+}f[100], s[100], m[100];
 
-static struct job{
-	int processId;
-	int arrivalTime;
-	int burstTime;
-        int bD
-	int turnAroundTime;
-	int etime;
-}
-student[100], faculty[100], ready[100], running[100];
+int n, fc=0, sc=0, mc=0;
+int quanta;
 
-int facultyCount=0;
-int studentCount=0;
-int rpointer=0;
-int time=0;
-
-void check(int t, int job){
-	if(ready[job].arrivalTime == t){
-		running[rpointer]= ready[job];
-	}
-}
-void runner(){
-	int
-}
-
-
-void users(){
-
-}
-
-
-void readyGen(){
-	int i;
-	int s=0, f=0;
-	int r=0;
-	for(i=0; i<=120; i++){
-		if(i== student[s].arrivalTime && i == faculty[f].arrivalTime){
-			ready[r] = faculty[f]; r++; f++;
-			while(i== faculty[f].arrivalTime){
-				ready[r]= faculty[f]; r++; f++;
-
+void RR(){
+	int time=0,i, cCount=0;
+	while(1){
+		for(i=0; i<mc; i++){
+			if(m[i].rbt>quanta){
+				time += quanta; m[i].rbt -= quanta;
+			}
+			else if(m[i].rbt ==0){ continue;
 			}
 			else{
-				ready[r]= student[s]; r++; s++;	
-			while(i== student[s].arrivalTime){
-				ready[r]= student[s]; r++; s++; 
+				time += m[i].rbt; m[i].rbt=0; cCount++;
+			}
+		}
+		if(time==120 || cCount == mc) break;
+	}
 
-			}
-		}	
-			else if(i == student[s].arrivalTime){
-			ready[r] = student[s];
-			r++;
-			s++; 
-			while(i== student[s].arrivalTime){
-				ready[r]= student[s];
-				r++; s++;
-			}
 }
-		else if(i == faculty[f].arrivalTime){
-			ready[r]= faculty[f];
-			r++;
-			f++; 
-			while(i == faculty[f].arrivalTime){
-				ready[r]= faculty[f];
-				r++; f++;
+
+void merg(){
+	int min= fc, i, flag=1, r=0, maxr=0;
+	if( fc>0 && sc>0){
+		if(min>sc){ flag=2; min=sc;	}
+		while(r != min){
+			if(flag==1){
+				if(f[r].art == s[maxr].art){
+					m[mc]= f[r]; r++; mc++;
+					m[mc]= s[maxr]; mc++; maxr++;
+				}
+				else if(f[r].art < s[maxr].art){
+					m[mc]= f[r]; r++; mc++;
+				}
+				else{
+					m[mc]= s[maxr]; maxr++; mc++;
+				}		
+			}
+			else{
+				if(s[r].art== f[maxr].art){
+					m[mc]= f[maxr]; mc++; maxr++;
+					m[mc]= s[r]; mc++; r++;
+				}
+				else if(s[r].art < f[maxr].art){
+					m[mc]= s[r]; mc++; r++;
+				}
+				else{
+					m[mc] = f[maxr]; mc++; maxr++;
+				}
+			
 			}
 		}
-		else continue; 
-	} 
-	rpointer= r;
-	}
-	void printer(){
-	int i=0, j=0;
-	printf("\nPrinter\n");
-	printf("Faculty Jobs: \n");
-	for(i=0; i<facultyCount; i++){
-		printf("Id: %d, Arrival time: %d, Bursttime: %d\n", faculty[i].processId, faculty[i].arrivalTime, faculty[i].burstTime);
-	}
-	printf("Student Jobs: \n");
-	for(i=0; i<studentCount; i++){
-		printf("Id: %d, Arrival time: %d, Burst time: %d\n", student[i].processId, student[i].arrivalTime, student[i].burstTime);
-	}
-	printf("\nReady Jobs: \n");
-	for(i=0; i<rpointer; i++){
-		printf("Id: %d, Arrival time: %d, Burst time: %d\n", ready[i].processId, ready[i].arrivalTime, ready[i].burstTime);
-				}
-	   }
-	void summary(int findex, int sindex);
-
-	
-	int  main()
-{
-	int total_query,map,i;
-	printf("Welcome\n");
-	printf("\n\n\n please enter total number of process to handle");
-	scanf("%d", &total_query);
-		for(i=0; i<total_query; i++){
-		printf("\nQuery Type (1 for faculty $$$$ 2 for Student): ");
-		
-		scanf("%d", &map);
-		if(map==1){
-			printf("Faculty's query\n");
-			printf("QueryId: "); scanf("%d", &faculty[facultyCount].processId);
-			printf("Arrival Time (mins from 10:00 am): "); scanf("%d", &faculty[facultyCount].arrivalTime);
-			printf("Query Resolving duration (mins): "); scanf("%d", &faculty[facultyJobCount].burstTime);
-			faculty[facultyCount].bbD= faculty[facultyCount].burstTime;
-			facultyCount++;
-
-		} 
+		if(min!=sc){
+			while(maxr!=sc){
+				m[mc]= s[maxr]; mc++; maxr++;
+			}	
+		}
 		else{
-			printf("\nStudent's query\n");
-			printf("QueryId: "); scanf("%d", &student[studentCount].processId);
-			printf("Arrival Time (mins from 10:00 am) : "); scanf("%d", &student[studentCount].arrivalTime);
-			printf("Query Resolving Time (mins): "); scanf("%d", &student[studentCount].burstTime);
-			student[studentCount].bbD = student[studentCount].burstTime;
-			studentCount++;
-
+			while(maxr!=fc){
+				m[mc]= f[maxr]; mc++; maxr++;
+			}
+		}
+	}	
+	else if(sc==0){
+		while(r!=fc){
+			m[mc]= f[r]; mc++; r++;
 		}
 	}
-	readyGen();
-	users();
+	else if(fc==0){
+		while(r!=sc){
+			m[mc]= s[r]; mc++; r++;
+		}
 	}
+	else {
+		printf("\n Nothing to be done"); exit(0);
+	}
+}
+void printer(){
+	int i=0; 
+	for(i; i<mc; i++){
+		printf("\n\nId: %d Arrivaltime: %d", m[i].prid, m[i].art);
+		printf("\n\nId: %d Arrivaltime: %d, RBT: %d", m[i].prid, m[i].art, m[i].rbt);
+	}
+}
 
-void summary(int findex, int sindex)
-{
-	int i;
-	printf("\n\nSummary");
-	printf("\nFaculty's QueriesDetails\n");
-	printf("\nQuery Id \t Arrival Time \t Resolving Time\n");
-	for (i = 0; i < findex; i++) {
-		printf("%d \t\t %d \t\t %d\n", faculty[i].processId, faculty[i].arrivalTime, faculty[i].burstTime );
+void input(){
+	int map,  i, t;
+	printf("Enter total no of queries: "); scanf("%d", &n);
+	if(n==0) { printf("\n No of queries\n"); exit(0);}
+	else{
+		printf("\nEnter Quanta for particular Process: "); scanf("%d", &quanta);
+		printf("\nEnter 1 for faculty $$$$$ 2 for student\n");
+		for(i=0; i<n; i++){
+			printf("\nJobType (1/2): "); scanf("%d", &map);
+			if(map==1){
+				printf("Query Id: "); scanf("%d", &f[fc].prid);
+				printf("Arrival Time: "); scanf("%d", &t); f[fc].art= t-1000;
+				printf("Resolving Time: "); scanf("%d", &f[fc].but);
+				printf("Resolving Time: "); scanf("%d", &f[fc].but); f[fc].rbt= f[fc].but; 
+				fc++;
+			} else{
+				printf("Query Id: "); scanf("%d", &s[sc].prid);
+				printf("Arrival Time: "); scanf("%d", &t); s[sc].art= t-1000;
+				printf("Resolving Time: "); scanf("%d", &s[sc].but);	
+				printf("Resolving Time: "); scanf("%d", &s[sc].but);	 s[sc].rbt= s[sc].but;
+				sc++;
+			}
+		}
 	}
+}
+void main(){
+	input();
+	merg();
+	RR();
+	printer();
 }
 
