@@ -7,41 +7,76 @@ struct job{
         int complete;
 	int turnAroundTime;
 	int waitingTime;
+}
+student[80],faculty[80],ready[100];
 
-student[100], faculty[100];
+int facultyCount=0;
+int studentCount=0;
+int rpointer=0;
 
-void enqueue(int a[], int rear);
-void dequeue(int a[], int front);
-
-void getStats(int findex, int sindex);
-
-void Scheduler();
-
-int timeQuanta= 2;
-
-void Scheduler(){
-	int fpointer=0, spointer=0;
-	int time= 120, i;
-	for(i=0; i<=time; i++){
-		if(student[spointer].arrivalTime == i || faculty[fpointer] == i){
-			if(faculty[fpointer]== i){
+void readyGen(){
+	int i;
+	int s=0, f=0;
+	int r=0;
+	for(i=0; i<=120; i++){
+		if(i== student[s].arrivalTime && i == faculty[f].arrivalTime){
+			ready[r] = faculty[f]; r++; f++;
+			while(i== faculty[f].arrivalTime){
+				ready[r]= faculty[f]; r++; f++;
 
 			}
 			else{
+				ready[r]= student[s]; r++; s++;	
+			while(i== student[s].arrivalTime){
+				ready[r]= student[s]; r++; s++; 
 
 			}
 		}	
-		else{
-			continue;
-		}	
-	}
+			else if(i == student[s].arrivalTime){
+			ready[r] = student[s];
+			r++;
+			s++; 
+			while(i== student[s].arrivalTime){
+				ready[r]= student[s];
+				r++; s++;
+			}
 }
+		else if(i == faculty[f].arrivalTime){
+			ready[r]= faculty[f];
+			r++;
+			f++; 
+			while(i == faculty[f].arrivalTime){
+				ready[r]= faculty[f];
+				r++; f++;
+			}
+		}
+		else continue; 
+	} 
+	rpointer= r;
+	}
+	void printer(){
+	int i=0, j=0;
+	printf("\nPrinter\n");
+	printf("Faculty Jobs: \n");
+	for(i=0; i<facultyCount; i++){
+		printf("Id: %d, Arrival time: %d, Bursttime: %d\n", faculty[i].processId, faculty[i].arrivalTime, faculty[i].burstTime);
+	}
+	printf("Student Jobs: \n");
+	for(i=0; i<studentCount; i++){
+		printf("Id: %d, Arrival time: %d, Burst time: %d\n", student[i].processId, student[i].arrivalTime, student[i].burstTime);
+	}
+	printf("\nReady Jobs: \n");
+	for(i=0; i<rpointer; i++){
+		printf("Id: %d, Arrival time: %d, Burst time: %d\n", ready[i].processId, ready[i].arrivalTime, ready[i].burstTime);
+				}
+	   }
+	void summary(int findex, int sindex);
 
-int  main()
+	
+	int  main()
 {
 	int total_query,map,i;
-	int facultyCount=0, studentCount=0;
-	printf("Welcome, Mr. Girish\n");
+	printf("Welcome\n");
 	printf("\n\n\n please enter total number of process to handle");
 	scanf("%d", &total_query);
 		for(i=0; i<total_query; i++){
@@ -67,12 +102,15 @@ int  main()
 
 		}
 	}
-		getStats(facultyCount, studentCount);
-}
+	readyGen();
+	printer();
+	summary(facultyCount, studentCount);
+	}
 
-void getStats(int findex, int sindex){
+void summary(int findex, int sindex)
+{
 	int i;
-	printf("\nDeatails of all jobs completed:");
+	printf("\n\nSummary");
 	printf("\nFaculty's QueriesDetails\n");
 	printf("\nQuery Id \t Arrival Time \t Resolving Time\n");
 	for (i = 0; i < findex; i++) {
