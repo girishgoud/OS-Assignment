@@ -1,4 +1,5 @@
 #include<stdio.h>
+#inlcude<stdlib.h>
 
 struct job{
 	int prid;
