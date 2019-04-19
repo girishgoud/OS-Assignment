@@ -16,7 +16,7 @@ int quanta;
 
 void RR()
 {
-	int time= m[0].at, mark=0, cc=0, i, rc;
+	int time= m[0].art, mark=0, cc=0, i, rc;
 	while(time!=120 && cc!=mc){
 		for(i=0; i<=mark; i++){
 			if(m[i].rbt > quanta){
@@ -33,7 +33,7 @@ void RR()
 		}
 		int start = mark+1;
 		for(rc= start; rc<mc; rc++){
-			if(m[rc].at <= time){
+			if(m[rc].art <= time){
 				mark++;
 			}
 		}
@@ -115,7 +115,7 @@ void printer(){
 	for(i; i<mc; i++){
 		
 		printf("\n%d\t\t%d\t\t%d\t\t%d\t\t%d\t\t\t%d",
-		m[i].prid, (m[i].at+1000), m[i].but, (m[i].cmpt+1000), (m[i].cmpt-m[i].art), ((m[i].cmpt-m[i].art)- m[i].but));
+		m[i].prid, (m[i].art+1000), m[i].but, (m[i].cmpt+1000), (m[i].cmpt-m[i].art), ((m[i].cmpt-m[i].art)- m[i].but));
 		total= m[i].cmpt;
 		sum+= (m[i].cmpt-m[i].art);
 	}
