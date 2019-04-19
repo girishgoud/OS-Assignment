@@ -1,5 +1,5 @@
 #include<stdio.h>
-#inlcude<stdlib.h>
+#include<stdlib.h>
 
 struct job{
 	int prid;
@@ -54,12 +54,12 @@ void merg(){
 				isc++;
 	
 			}
-			else if(f[ifc].at < s[isc].at){
+			else if(f[ifc].art < s[isc].art){
 				m[mc]= f[ifc];
 				mc++;
 				ifc++;
 			}
-			else if(f[ifc].at > s[isc].at){
+			else if(f[ifc].art > s[isc].art){
 				m[mc]= s[isc];
 				mc++;
 				isc++;
