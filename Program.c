@@ -107,11 +107,21 @@ void merg(){
 	}
 }
 void printer(){
-	int i=0; 
+	int i=0,total=0,sum=0;
+	double avg;
+	printf("\nSummary for the Execution\n");
+	printf("\nQuery ID\tArrival Time\tRessolving Time\tCompletion Time\tTurn Around Time\tWaiting Time");
 	for(i; i<mc; i++){
 		
-		printf("\n\n\n Id: %d Arrival time: %d, RBT: %d, CMPT: %d", m[i].prid, m[i].art, m[i].rbt, m[i].cmpt);
+		printf("\n%d\t\t%d\t\t%d\t\t%d\t\t%d\t\t\t%d",
+		m[i].prid, (m[i].at+1000), m[i].but, (m[i].cmpt+1000), (m[i].cmpt-m[i].art), ((m[i].cmpt-m[i].art)- m[i].but));
+		total= m[i].cmpt;
+		sum+= (m[i].cmpt-m[i].art);
 	}
+	avg = sum/mc;
+	printf("\n\nTotal time Spent for all queries to execute: %d", total);
+	printf("\nAverage quering  time: %lf", avg);
+	printf("\nProcess Execution has  Completed");
 }
 
 void input(){
@@ -125,13 +135,23 @@ void input(){
 			printf("\nJobType (1/2): "); scanf("%d", &map);
 			if(map==1){
 				printf("Query Id: "); scanf("%d", &f[fc].prid);
-				printf("Arrival Time: "); scanf("%d", &t); f[fc].art= t-1000;
-				printf("Resolving Time: "); scanf("%d", &f[fc].but);
+				printf("Arrival Time: "); scanf("%d", &t);
+				if(t<1000 || t>1200){
+					printf("\nEnter Correct time");
+					input();
+				}
+				else{f[fc].art= t-1000;}
+				printf("Resolving Time: "); scanf("%d", &f[fc].but);	 f[fc].rbt= f[fc].but; 
 				printf("Resolving Time: "); scanf("%d", &f[fc].but); f[fc].rbt= f[fc].but; 
 				fc++;
 			} else{
 				printf("Query Id: "); scanf("%d", &s[sc].prid);
-				printf("Arrival Time: "); scanf("%d", &t); s[sc].art= t-1000;
+				printf("Arrival Time: "); scanf("%d", &t); 
+				if(t<1000 || t>1200){
+					printf("\nEnter Correct time\n");
+					input();
+				}
+				else {s[sc].art= t-1000; }
 				printf("Resolving Time: "); scanf("%d", &s[sc].but);	
 				printf("Resolving Time: "); scanf("%d", &s[sc].but);	 s[sc].rbt= s[sc].but;
 				sc++;
@@ -139,10 +159,18 @@ void input(){
 		}
 	}
 }
-        main(){
+   void inst(){
+	printf("\nWelcome, please follow our instruction properly for perfecct functioning of the program"
+			"\n**> Please Enter time in 2400 hours format. example for 10:30 am enter 10030"
+			"\n**>Enter Query arrival times in ascending order, i.e., in real time arrival manner\n"
+			"\nAll Time units are in minutes. \n\n"
+			);
+}
+
+ main(){
+ 	inst();
 	input();
 	merg();
 	RR();
 	printer();
 }
-
