@@ -1,11 +1,9 @@
 #include<stdio.h>
 
 struct job{
-	char processName[20];
 	int processId;
 	int arrivalTime;
-	int burstTime;	
-};
+	int burstTime;
         int complete;
 	int turnAroundTime;
 	int waitingTime;
@@ -41,16 +39,11 @@ void Scheduler(){
 
 int  main()
 {
-	int total_query, map;
-	struct job student[80], faculty[80];
 	int total_query,map,i;
-	int facultycount=0, studentcount=0;
+	int facultyCount=0, studentCount=0;
 	printf("Welcome, Mr. Girish\n");
-	printf("Please Enter total number of process to handle: ");
 	printf("\n\n\n please enter total number of process to handle");
 	scanf("%d", &total_query);
-	for(int i=0; i<total_query; i++){
-		printf("Query (1 for faculty $$$$ 2 for Student): ");
 		for(i=0; i<total_query; i++){
 		printf("\nQuery Type (1 for faculty $$$$ 2 for Student): ");
 		
@@ -74,7 +67,6 @@ int  main()
 
 		}
 	}
-} 
 		getStats(facultyCount, studentCount);
 }
 
